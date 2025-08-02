@@ -62,6 +62,8 @@ public:
       return false;
     long hn = lc->next, hp = lc->prev;
     ShmMessage * ln = (ShmMessage *)pshm->get_address_from_handle(hn), * lp = this;
+    // 这里应该是 获取前一个对象的地址
+    // ShmMessage* lp = (ShmMessage*)pshm->get_address_from_handle(hp);
     lp->next = hn;
     ln->prev = hp;
     pshm->deallocate(lc);
