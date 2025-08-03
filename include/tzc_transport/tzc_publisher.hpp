@@ -54,9 +54,13 @@ public:
       msg.magic_ = ptr->magic_ = rand();
 
       //link the head of shm
+      // 可以不用复制，暂时无作用
+      // 反而 数据对象析构时，引用计数减一；不赋值头节点链表，则不会操作
       msg.pmsg_ = pobj_ -> pmsg_;
       msg.pmsg_ -> take();
       msg.name_ = pobj_ -> getName();
+      // 该消息块指针需要赋值，当数据对象析构时，引用计数减一
+      // 这里是通过共享内存句柄，转换得到消息块对象地址
       msg.pshm_ = pobj_ -> pshm_;
 
       pobj_->addLast(ptr);
